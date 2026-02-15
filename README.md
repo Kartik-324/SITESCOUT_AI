@@ -1,4 +1,4 @@
-# 🚀 AI Lead Generation & Cold Email Automation System
+# 🚀 SITESCOUT_AI (AI Lead Generation & Cold Email Automation System )
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com/)
