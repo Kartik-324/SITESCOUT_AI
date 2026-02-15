@@ -12,7 +12,7 @@
 1. 🔍 **Searches Google** for businesses matching your query
 2. 🌐 **Scrapes websites** to extract contact information
 3. 🤖 **Uses AI** to structure and clean the data
-4. 📧 **Generates personalized** cold emails for each lead
+4. 📧 **Generates and send personalized** cold emails for each lead
 5. 📊 **Saves automatically** to Google Sheets
 6. 📬 **Optionally sends** emails via SMTP
 
