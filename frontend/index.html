@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lead Generation System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="8" fill="url(#gradient)"/>
+                        <path d="M20 10L30 20L20 30L10 20L20 10Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>SiteScout AI</span>
+                </div>
+                <div class="header-subtitle">Find businesses without websites & become their growth partner</div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-card">
+                    <h2 class="search-title">🎯 Discover Your Next Clients</h2>
+                    <p class="search-description">Find local businesses missing online presence - your perfect opportunity!</p>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="searchQuery">
+                                <span class="label-icon">🔍</span>
+                                <span>What are you looking for?</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="searchQuery" 
+                                placeholder="e.g., best cafes in bhopal, gyms in hyderabad"
+                                class="input-field"
+                                autocomplete="off"
+                            >
+                            <div class="input-hint">Tip: Be specific about location and business type</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maxResults">
+                                <span class="label-icon">📊</span>
+                                <span>Number of Leads</span>
+                            </label>
+                            <div class="range-container">
+                                <input 
+                                    type="range" 
+                                    id="maxResults" 
+                                    min="5" 
+                                    max="25"
+                                    value="10"
+                                    class="range-slider"
+                                >
+                                <span class="range-value" id="rangeValue">10</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="generateBtn" class="btn-generate">
+                        <span class="btn-icon">✨</span>
+                        <span>Generate Leads</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Loading Section -->
+            <section id="loadingSection" class="loading-section hidden">
+                <div class="loading-card">
+                    <div class="loading-animation">
+                        <div class="spinner"></div>
+                        <div class="pulse-ring"></div>
+                    </div>
+                    <h3 id="loadingText">🔍 Searching for businesses...</h3>
+                    <div class="loading-steps">
+                        <div class="step active">Searching Google</div>
+                        <div class="step">Analyzing websites</div>
+                        <div class="step">Extracting contacts</div>
+                        <div class="step">Generating emails</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section hidden">
+                <div class="results-header">
+                    <div class="results-info">
+                        <h2>🎉 Found <span id="totalLeads" class="highlight">0</span> Potential Clients</h2>
+                        <p class="results-subtitle">Businesses ready for your services</p>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="viewSheetsBtn" class="btn-action btn-sheets">
+                            <span>📊</span>
+                            <span>View in Sheets</span>
+                        </button>
+                        <button id="sendEmailsBtn" class="btn-action btn-email">
+                            <span>📧</span>
+                            <span>Send Emails</span>
+                        </button>
+                        <button id="downloadBtn" class="btn-action btn-download">
+                            <span>⬇️</span>
+                            <span>Export JSON</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🌐</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="withWebsite">0</div>
+                            <div class="stat-label">With Website</div>
+                        </div>
+                    </div>
+                    <div class="stat-card priority">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="withoutWebsite">0</div>
+                            <div class="stat-label">Without Website (Priority!)</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📧</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="withEmail">0</div>
+                            <div class="stat-label">With Email</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="avgRating">0</div>
+                            <div class="stat-label">Avg Rating</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="table-container">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Business Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Rating</th>
+                                <th>Website</th>
+                                <th>Status</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Email Modal -->
+            <div id="emailModal" class="modal hidden">
+                <div class="modal-overlay"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>📧 Cold Email Preview</h3>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="emailContent" class="email-preview"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-copy" id="copyEmailBtn">📋 Copy to Clipboard</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <section id="errorSection" class="error-section hidden">
+                <div class="error-card">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Oops! Something went wrong</h3>
+                    <p id="errorText"></p>
+                    <button class="btn-retry" id="retryBtn">Try Again</button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Powered by <strong>OpenAI</strong>, <strong>Serper.dev</strong> & <strong>Google Sheets</strong></p>
+            <p class="footer-tagline">Built to help you find businesses that need your services 🚀</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
